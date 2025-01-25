@@ -1,22 +1,40 @@
 import http.client
 import urllib.parse
+import json
 
-conn = http.client.HTTPSConnection("streaming-availability.p.rapidapi.com")
 
-file = open("apikey.txt", "r")
-key = file.read()
+def print_data_output(data):
+    parsedData = json.loads(data)
 
-headers = {
-    'x-rapidapi-key': key,
-    'x-rapidapi-host': "streaming-availability.p.rapidapi.com"
-}
+    with open("output.json", "w", encoding="utf-8") as json_file:
+        json.dump(parsedData, json_file, indent=4)
 
-movie = input("Enter Movie Title: ")
-encodedMovie = urllib.parse.quote(movie)
+def get_encoded_title():
+    movie = input("Enter Movie Title: ")
+    return urllib.parse.quote(movie)
 
-conn.request("GET", f"/shows/search/title?country=us&title={encodedMovie}&show_type=movie&output_language=en", headers=headers)
+def read_key():
+    file = open("apikey.txt", "r")
+    return file.read()
 
-res = conn.getresponse()
-data = res.read()
+def get_movie_data():
+    conn = http.client.HTTPSConnection("streaming-availability.p.rapidapi.com")
 
-print(data.decode("utf-8"))
+    headers = {
+        'x-rapidapi-key': read_key(),
+        'x-rapidapi-host': "streaming-availability.p.rapidapi.com"
+    }
+
+    conn.request("GET", f"/shows/search/title?country=us&title={get_encoded_title()}&show_type=movie&output_language=en", headers=headers)
+
+    res = conn.getresponse()
+    data = res.read()
+
+    # print(data.decode("utf-8"))
+    print_data_output(data)
+
+def main():
+    get_movie_data()
+
+if __name__ == '__main__':
+    main()
