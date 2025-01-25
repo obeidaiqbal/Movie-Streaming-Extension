@@ -10,3 +10,4 @@ Pushing:
 Pulling:
   ```sh
   git pull origin main
+  ```
