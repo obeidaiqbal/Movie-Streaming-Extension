@@ -14,7 +14,7 @@ def get_encoded_title():
     return urllib.parse.quote(movie)
 
 def read_key():
-    file = open("apikey.txt", "r")
+    file = open("backend/apikey.txt", "r")
     return file.read()
 
 def get_movie_data():
