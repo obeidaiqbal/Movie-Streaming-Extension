@@ -1,7 +1,7 @@
 {
   "name": "Movie Streaming Finder",
   "description": "Extenstion meant for finding a movies streaming availability.",
-  "version": "1.3",
+  "version": "1.4",
   "manifest_version": 3,
   "action": {
     "default_popup": "index.html",
